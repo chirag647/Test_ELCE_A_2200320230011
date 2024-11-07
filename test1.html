@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent{
+            align-self: center;
+            border-radius: 20px;
+            height: 500px;
+            width:700px;
+            border:500px;
+            text-align: center;
+            background-color:burlywood
+            
+        }
+        .child1{
+            align-self: center;
+            height: 300px;
+            width:450px;
+            border-color: black;
+            border-radius: 20px;
+            background-color: bisque;
+            text-align: center;
+            margin-left: 120px;
+            margin-top: 55px;
+            
+        }
+        .gbtn{
+            background-color: rgb(110, 162, 110);
+            height:45px;
+            border-radius: 25px;
+            
+        }
+        .rbtn{
+            background-color: rgb(174, 101, 101);
+            height: 45px;
+            border-radius: 25px;
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <h1>
+            Random Joke Generator
+        </h1>
+        <div class="child1">
+            <p ><h2 id="para">Press The Button For a joke!!!</h2></p>
+            <p  id="chr_count">Character count: 0</p>
+            </div>
+            <div class="child2">
+                <button class="gbtn" type="submit" onclick="getdata()"><b>Get Joke</b></button>
+                <button class="rbtn" type="reset" onclick="cleardata()"><b>Clear Joke</b></button>
+            </div>
+    </div>
+    <script>
+        const getdata = async ()=> {
+    try {
+        const response=await fetch("https://v2.jokeapi.dev/joke/Any");
+        const data=await response.json();
+        display_data(data);
+        
+    } catch (error) {
+        console.log("error in fetching api: ",error);
+        
+    }
+}
+
+const display_data= (data)=>{
+    try {
+        let joke=document.getElementById("para");
+        joke.innerText=(
+            `${data.setup}
+            ${data.delivery}`
+        );
+        let chr_count=document.getElementById("chr_count");
+        let chr=data.setup+data.delivery;
+        let chr_len=chr.length;
+        chr_count.innerText=(`Character Count= ${chr_len}`);
+        
+    } catch (error) {
+        console.log("error in displaying data: ",error)
+        
+    }
+}
+
+const cleardata =()=>{
+    try {
+        let joke=document.getElementById("para");
+        joke.innerText=(` Press the Button for the Joke`);
+        let chr_count=document.getElementById("chr_count");
+        chr_count.innerText=(`Character Count = 0`);
+
+        
+    } catch (error) {
+        console.log("error in clearing data ",error);
+    }
+}
+    </script>
+</body>
+</html>
